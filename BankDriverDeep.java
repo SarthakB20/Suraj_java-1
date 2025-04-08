@@ -1,0 +1,123 @@
+class Address {
+    String area;
+    String city;
+    String state;
+    int pincode;
+
+    Address(String area, String city, String state, int pincode) {
+        this.area = area;
+        this.city = city;
+        this.state = state;
+        this.pincode = pincode;
+    }
+
+    Address(Address old) {
+        this.area = old.area;
+        this.city = old.city;
+        this.state = old.state;
+        this.pincode = old.pincode;
+    }
+
+    public void displayAddress() {
+        System.out.println("Address Details");
+        System.out.println("Area: " + area);
+        System.out.println("City: " + city);
+        System.out.println("State: " + state);
+        System.out.println("Pincode: " + pincode);
+    }
+}
+
+class Account {
+    long anumber;
+    String ifsc;
+    String accountType;
+    double balance;
+
+    Account(long anumber, String ifsc, String accountType, double balance) {
+        this.anumber = anumber;
+        this.ifsc = ifsc;
+        this.accountType = accountType;
+        this.balance = balance;
+    }
+
+    Account(Account old) {
+        this.anumber = old.anumber;
+        this.ifsc = old.ifsc;
+        this.accountType = old.accountType;
+        this.balance = old.balance;
+    }
+
+    public void displayAccountDetails() {
+        System.out.println("Account Details");
+        System.out.println("Account Number: " + anumber);
+        System.out.println("IFSC Code: " + ifsc);
+        System.out.println("Account Type: " + accountType);
+        System.out.println("Balance: " + balance);
+    }
+}
+
+class Bank {
+    String accountName;
+    String branch;
+    String email;
+    Account accountDetails;
+    Address address;
+
+    Bank(String accountName, String branch, String email, Account accountDetails, Address address) {
+        this.accountName = accountName;
+        this.branch = branch;
+        this.email = email;
+        this.accountDetails = new Account(accountDetails);
+        this.address = new Address(address);
+    }
+
+    Bank(Bank old) {
+        this.accountName = old.accountName;
+        this.branch = old.branch;
+        this.email = old.email;
+        this.accountDetails = new Account(old.accountDetails);
+        this.address = new Address(old.address);
+    }
+
+    public void displayBankDetails() {
+        System.out.println("Bank Details");
+        System.out.println("Account Name: " + accountName);
+        System.out.println("Branch: " + branch);
+        System.out.println("Email: " + email);
+        System.out.println();
+        accountDetails.displayAccountDetails();
+        System.out.println();
+        address.displayAddress();
+        System.out.println();
+    }
+}
+
+public class BankDriverDeep {
+    public static void main(String[] args) {
+        Address address = new Address("DP Road", "Pune", "Maharashtra", 411052);
+        Account account = new Account(123456789012L, "SBIN0000456", "Savings", 50000.75);
+        
+        Bank oldBank = new Bank("Rohit Sharma", "Pune Main Branch", "rohit@gmail.com", account, address);
+        
+        oldBank.displayBankDetails();
+        
+        System.out.println("----------------------------------");
+        System.out.println("Copy Below");
+        System.out.println();
+        
+        Bank copyBank = new Bank(oldBank);
+        copyBank.displayBankDetails();
+        
+        System.out.println("----------------------------------");
+        System.out.println("Copy After Change");
+        
+        copyBank.accountName = "Rushi Kale";
+        copyBank.accountDetails.balance = 60000.00;
+        copyBank.displayBankDetails();
+        
+        System.out.println("----------------------------------");
+        System.out.println("Original Account After Change in the Copy");
+        System.out.println();
+        oldBank.displayBankDetails();
+    }
+}
